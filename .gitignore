@@ -1,0 +1,5 @@
+bin/
+obj/
+
+# Visual Studio settings
+.vscode/
