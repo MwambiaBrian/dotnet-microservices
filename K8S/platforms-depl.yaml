@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platform-service
+  template:
+    metadata:
+      labels:
+        app: platform-service
+    spec:
+      containers:
+        - name: platform-service
+          image: nelsb/platformservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: platforms-clusterip-serv
+spec:
+  type: ClusterIP
+  selector:
+    app: platform-service
+  ports:
+  - name: platform-service
+    protocol: TCP
+    port: 80
+    targetPort: 80

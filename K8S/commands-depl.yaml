@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: command-service
+  template:
+    metadata:
+      labels:
+        app: command-service
+    spec:
+      containers:
+        - name: command-service
+          image: nelsb/commandservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: commands-clusterip-serv
+spec:
+  type: ClusterIP
+  selector:
+    app: command-service
+  ports:
+  - name: command-service
+    protocol: TCP
+    port: 80
+    targetPort: 80
