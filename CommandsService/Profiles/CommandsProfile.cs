@@ -1,6 +1,6 @@
 using AutoMapper;
-using CommandService.Dto;
 using CommandService.Dtos;
+using CommandsService.Dtos;
 using CommandsService.Models;
 
 namespace CommandService.Profiles
@@ -14,6 +14,8 @@ namespace CommandService.Profiles
 
             CreateMap<CommandCreateDto, Command>();
             CreateMap<Command, CommandReadDto>();
+            CreateMap<PlatformPublishedDto, Platform> ()
+                .ForMember(dest => dest.ExternalID, opt => opt.MapFrom(src => src.Id));
         }
     }
 }
