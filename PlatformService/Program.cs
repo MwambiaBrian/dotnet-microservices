@@ -9,6 +9,7 @@ using PlatformService;
 using PlatformService.Data;
 using PlatformService.SyncDataServices.Http;
 using PlatformService.AsyncDataServices;
+using PlatformService.SyncDataServices.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
+builder.Services.AddGrpc();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Configure the database context
@@ -44,13 +46,7 @@ else
 
 // Build the application
 var app = builder.Build();
-// Disable certificate validation (for development purposes)
- var handler = new HttpClientHandler
-    {
-        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    };
 
-    var httpClient = new HttpClient(handler);
 
 
 // Configure the HTTP request pipeline
@@ -62,8 +58,15 @@ if (app.Environment.IsDevelopment())
 }
  
 //app .UseHttpsRedirection();
+//app.UseRouting();
 app.UseAuthorization();
+
 app.MapControllers();
+app.MapGrpcService<GrpcPlatformService>();
+app.MapGet("Protos/platforms.proto", async context => 
+{
+    await context.Response.WriteAsync(File.ReadAllText("Protos/platforms.proto"));
+});
 PrepDb.PrepPopulation(app, isProduction);
 app.Run();
  
