@@ -1,0 +1,16 @@
+# An introduction to Microservices using .NET
+
+## A platform management backend application that allows you to add tech platfroms e.g docker and SQL Server and their various commands to a database
+
+## The project included:
+
+- Two .NET Microservices using the REST API pattern
+- Dedicated persistence layers for both services
+- Deploying the services to Kubernetes cluster
+- Employing the API Gateway pattern to route to the services
+- Synchronous messaging between services (HTTP & gRPC)
+- Asynchronous messaging between services using an Event Bus (RabbitMQ)
+  ![POST  a new Platform](image.png)
+  ![GET all platforms](image-1.png)
+
+### pull the images from docker hub at nelsb
