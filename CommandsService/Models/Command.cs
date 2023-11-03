@@ -16,3 +16,4 @@ namespace CommandsService.Models
         public Platform Platform {get; set;}
     }
 }
+
