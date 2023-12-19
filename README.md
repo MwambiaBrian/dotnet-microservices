@@ -1,6 +1,6 @@
 # An Introduction to Microservices using .NET
 
-Welcome to the repository for the "Microservices using .NET" project! This platform management backend application allows you to add various tech platforms, such as Docker and SQL Server, along with their associated commands, to a database. It's a demonstration of microservices architecture with a focus on .NET technologies.
+Welcome! "Microservices using .NET" project! This platform management backend application allows you to add various tech platforms, such as Docker and SQL Server, along with their associated commands, to a database. It's a demonstration of microservices architecture with a focus on .NET technologies.
 
 ## Repository
 
@@ -8,7 +8,7 @@ Welcome to the repository for the "Microservices using .NET" project! This platf
 
 ## Project Overview
 
-The goal of this project is to provide a real-world example of microservices architecture implemented in .NET. Below are the key components and features of this project:
+Below are the key components and features of the project:
 
 - Implementation of two .NET Microservices using the REST API pattern
 - Utilization of dedicated persistence layers for both services
@@ -39,3 +39,51 @@ To make deployment and scaling easier, Docker images for the services are availa
 docker pull nelsb/platformservice
 docker pull nelsb/commandservice
 ```
+
+## Deploying
+
+Make sure you have Docker Desktop installed and running with kubernetes enabled
+
+1. Clone the repository
+
+```shell
+git clone github.com/MwambiaBrian/dotnet-microservices.git
+```
+
+2. Change directory to K8s folder
+
+```shell
+cd ./K8S
+```
+
+3. Deploying all the services using kubectl starting with the platform service
+
+```shell
+kubectl apply -f platfroms-depl.yaml
+kubectl apply -f commands-depl.yaml
+
+```
+
+4. Deploy NGINX (Ingress api gateway)
+
+```shell
+kubectl apply -f ingress-serv.yaml
+```
+
+5. Deploy the database and a persistent volume claim
+
+```shell
+kubectl apply -f local-pvc.yaml
+kubectl apply -f mssql-plat-depl.yaml
+```
+
+6. Deploy RabbitMq
+
+```shell
+kubectl apply -f rabbitmq-depl.yaml
+```
+
+## What I learnt
+
+I gained a real-world experience of microservices architecture implemented in .NET. on Kubernetes.
+Deploying on kuberentes cluster
